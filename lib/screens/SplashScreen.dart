@@ -1,6 +1,6 @@
 part of 'Screens.dart';
 
-class SpalchScreen extends StatelessWidget {
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,12 @@ class SpalchScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
                         child: Center(
                           child: Text(
                             "Login",
@@ -37,7 +42,12 @@ class SpalchScreen extends StatelessWidget {
                             minimumSize: Size(180, 40)),
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpScreen()));
+                          },
                           style: ElevatedButton.styleFrom(
                               primary: kWhite, elevation: 2),
                           child: Center(

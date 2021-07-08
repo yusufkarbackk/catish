@@ -18,7 +18,7 @@ class AuthServices {
   }
 
   static Future<SignInSignUpResult> signUp(
-      String name, String email, String password, int phone) async {
+      String name, String email, String password, int? phone) async {
     try {
       UserCredential result = await mAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -32,6 +32,23 @@ class AuthServices {
     } catch (e) {
       return SignInSignUpResult(
           user: null, message: e.toString().split(']')[1]);
+    }
+  }
+
+  static Future<void> signOut(context) async {
+    try {
+      final User? firebaseUser = mAuth.currentUser;
+
+      if (firebaseUser != null) {
+        FirebaseAuth.instance.signOut().then((value) => {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => SplashScreen()),
+                  (route) => false)
+            });
+      }
+    } catch (e) {
+      print(e); // TODO: show dialog with error
     }
   }
 

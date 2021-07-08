@@ -1,15 +1,17 @@
 part of 'Screens.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   bool isLogin = false;
   @override
@@ -29,10 +31,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Image.asset('images/splash-screen-logo.png'),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.width * 0.75,
+                  height: MediaQuery.of(context).size.height * 0.50,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      TextField(
+                        controller: nameController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: kDarkBrown, width: 2)),
+                            hintText: "Enter your name",
+                            labelText: 'Name',
+                            labelStyle: TextStyle(color: kDarkBaige),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: kLightBrown))),
+                      ),
+                      TextField(
+                        obscureText: true,
+                        controller: phoneController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: kDarkBrown, width: 2)),
+                            hintText: "Enter your phone",
+                            labelText: 'Phone',
+                            labelStyle: TextStyle(color: kDarkBaige),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: kLightBrown))),
+                      ),
                       TextField(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -78,10 +107,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               setState(() {
                                 isLogin = true;
                               });
+                              int? phoneNumber =
+                                  int.tryParse(phoneController.text);
+
                               SignInSignUpResult result =
-                                  await AuthServices.signIn(
+                                  await AuthServices.signUp(
+                                      nameController.text,
                                       emailController.text,
-                                      passwordController.text);
+                                      passwordController.text,
+                                      phoneNumber);
 
                               Navigator.push(
                                   context,

@@ -12,3 +12,5 @@ TextStyle kMainText = GoogleFonts.raleway(
 
 TextStyle kSeccondText = GoogleFonts.roboto(
     textStyle: TextStyle(color: Colors.black87, fontSize: 18));
+
+Widget? prevPage;

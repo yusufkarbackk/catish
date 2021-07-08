@@ -5,6 +5,16 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    User? catishUser = Provider.of<User?>(context);
+
+    if (!(prevPage is SplashScreen)) {
+      prevPage = SplashScreen();
+    } else {
+      if (!(prevPage is HomeScreen)) {
+        prevPage = HomeScreen();
+      }
+    }
+
+    return catishUser == null ? SplashScreen() : HomeScreen();
   }
 }
