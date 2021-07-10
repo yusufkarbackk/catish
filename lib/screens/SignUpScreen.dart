@@ -14,6 +14,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneController = TextEditingController();
 
   bool isLogin = false;
+  late bool isEmailValid;
+  late bool isPasswordValid;
+  late bool isNameValid;
+  late bool isPhoneValid;
+
+  @override
+  void initState() {
+    super.initState();
+    isEmailValid = true;
+    isPasswordValid = true;
+    isPhoneValid = true;
+    isNameValid = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,60 +49,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextField(
+                      AuthTextWidget(
+                        obscure: false,
+                        keyboardType: TextInputType.name,
+                        errorText:
+                            isNameValid ? null : "please enter your name",
                         controller: nameController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kDarkBrown, width: 2)),
-                            hintText: "Enter your name",
-                            labelText: 'Name',
-                            labelStyle: TextStyle(color: kDarkBaige),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: kLightBrown))),
+                        hintText: "Enter your name",
+                        labelText: "Name",
+                        onChanged: (text) {
+                          setState(() {
+                            isNameValid = nameController.text.length > 0;
+                          });
+                        },
                       ),
-                      TextField(
-                        obscureText: true,
+                      AuthTextWidget(
+                        obscure: false,
+                        keyboardType: TextInputType.number,
+                        errorText: isPhoneValid
+                            ? null
+                            : "please enter your phone number(12 characters)",
                         controller: phoneController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kDarkBrown, width: 2)),
-                            hintText: "Enter your phone",
-                            labelText: 'Phone',
-                            labelStyle: TextStyle(color: kDarkBaige),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: kLightBrown))),
+                        hintText: "Enter your phone",
+                        labelText: "Phone",
+                        onChanged: (text) {
+                          setState(() {
+                            isPhoneValid = phoneController.text.length == 12;
+                          });
+                        },
                       ),
-                      TextField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kDarkBrown, width: 2)),
-                            hintText: "Enter your email",
-                            labelText: 'Email',
-                            labelStyle: TextStyle(color: kDarkBaige),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: kLightBrown))),
-                      ),
-                      TextField(
-                        obscureText: true,
-                        controller: passwordController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kDarkBrown, width: 2)),
-                            hintText: "Enter your password",
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: kDarkBaige),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: kLightBrown))),
-                      )
+                      AuthTextWidget(
+                          obscure: false,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (text) {
+                            setState(() {
+                              isEmailValid =
+                                  EmailValidator.validate(text ?? "");
+                            });
+                          },
+                          controller: emailController,
+                          hintText: "Enter your email",
+                          labelText: "Email",
+                          errorText:
+                              isEmailValid ? null : "please enter your email"),
+                      AuthTextWidget(
+                          obscure: true,
+                          onChanged: (text) {
+                            isPasswordValid =
+                                passwordController.text.length >= 6;
+                          },
+                          controller: passwordController,
+                          hintText: "Enter your password",
+                          labelText: "Password",
+                          errorText: isPasswordValid
+                              ? null
+                              : "please enter your password")
                     ],
                   ),
                 ),
@@ -107,20 +122,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               setState(() {
                                 isLogin = true;
                               });
-                              int? phoneNumber =
-                                  int.tryParse(phoneController.text);
 
-                              SignInSignUpResult result =
-                                  await AuthServices.signUp(
-                                      nameController.text,
-                                      emailController.text,
-                                      passwordController.text,
-                                      phoneNumber);
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                              if (emailController.text.length == 0 &&
+                                  passwordController.text.length == 0 &&
+                                  nameController.text.length == 0 &&
+                                  phoneController.text.length == 0) {
+                                setState(() {
+                                  isLogin = false;
+                                });
+                                Flushbar(
+                                  duration: Duration(seconds: 3),
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  backgroundColor: Color(0xFFFF5C83),
+                                  message: "Please fill all the fields",
+                                )..show(context);
+                              } else {
+                                int? phoneNumber =
+                                    int.tryParse(phoneController.text);
+                                SignInSignUpResult result =
+                                    await AuthServices.signUp(
+                                        nameController.text,
+                                        emailController.text,
+                                        passwordController.text,
+                                        phoneNumber);
+                                if (result.message != null) {
+                                  Flushbar(
+                                    duration: Duration(seconds: 2),
+                                    flushbarPosition: FlushbarPosition.TOP,
+                                    backgroundColor: Color(0xFFFF5C83),
+                                    message: result.message,
+                                  )..show(context);
+                                  setState(() {
+                                    isLogin = false;
+                                  });
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                }
+                              }
                             },
                             child: Center(
                               child: FaIcon(FontAwesomeIcons.paw),

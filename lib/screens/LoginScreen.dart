@@ -12,6 +12,16 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   bool isLogin = false;
+  late bool isEmailValid;
+  late bool isPasswordValid;
+
+  @override
+  void initState() {
+    super.initState();
+    isEmailValid = true;
+    isPasswordValid = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +44,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            isEmailValid = EmailValidator.validate(text);
+                          });
+                        },
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                            errorStyle: TextStyle(color: Colors.redAccent),
+                            errorText:
+                                isEmailValid ? null : "Please fill the email",
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: kDarkBrown, width: 2)),
@@ -47,10 +65,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderSide: BorderSide(color: kLightBrown))),
                       ),
                       TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            isPasswordValid = text.length >= 6;
+                          });
+                        },
                         obscureText: true,
                         controller: passwordController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
+                            errorStyle: TextStyle(color: Colors.redAccent),
+                            errorText: isPasswordValid
+                                ? null
+                                : "Please fill the password (minimum 6 characters)",
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: kDarkBrown, width: 2)),
@@ -78,15 +105,39 @@ class _LoginScreenState extends State<LoginScreen> {
                               setState(() {
                                 isLogin = true;
                               });
-                              SignInSignUpResult result =
-                                  await AuthServices.signIn(
-                                      emailController.text,
-                                      passwordController.text);
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                              if (emailController.text.length == 0 &&
+                                  passwordController.text.length == 0) {
+                                setState(() {
+                                  isLogin = false;
+                                });
+                                Flushbar(
+                                  duration: Duration(seconds: 3),
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  backgroundColor: Color(0xFFFF5C83),
+                                  message: "Please fill all the fields",
+                                )..show(context);
+                              } else {
+                                SignInSignUpResult result =
+                                    await AuthServices.signIn(
+                                        emailController.text,
+                                        passwordController.text);
+                                if (result.message != null) {
+                                  Flushbar(
+                                    duration: Duration(seconds: 2),
+                                    flushbarPosition: FlushbarPosition.TOP,
+                                    backgroundColor: Color(0xFFFF5C83),
+                                    message: result.message,
+                                  )..show(context);
+                                  setState(() {
+                                    isLogin = false;
+                                  });
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                }
+                              }
                             },
                             child: Center(
                               child: FaIcon(FontAwesomeIcons.paw),

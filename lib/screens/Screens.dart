@@ -5,7 +5,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:catish/shared/Constants.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:catish/widgets/Widgets.dart';
 
 part 'SplashScreen.dart';
 part 'LoginScreen.dart';
