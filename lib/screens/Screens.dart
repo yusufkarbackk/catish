@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:catish/widgets/Widgets.dart';
+import 'package:catish/models/Models.dart';
 
 part 'SplashScreen.dart';
 part 'LoginScreen.dart';
