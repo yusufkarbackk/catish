@@ -6,9 +6,5 @@ class CatishUser extends ChangeNotifier {
   late final String email;
   late final int? phone;
 
-  CatishUser(
-      {required this.id,
-      required this.name,
-      required this.email,
-      required this.phone});
+  CatishUser({this.id = '', this.name = '', this.email = '', this.phone = 0});
 }

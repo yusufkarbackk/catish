@@ -15,6 +15,7 @@ class UserServices {
 
   static Future<CatishUser> getUser(String userId) async {
     DocumentSnapshot snapshot = await _userCollection.doc(userId).get();
+
     return CatishUser(
         id: userId,
         name: (snapshot.data() as dynamic)['name'],

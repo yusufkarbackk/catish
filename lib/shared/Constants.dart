@@ -14,3 +14,7 @@ TextStyle kSeccondText = GoogleFonts.roboto(
     textStyle: TextStyle(color: Colors.black87, fontSize: 18));
 
 Widget? prevPage;
+
+var apiKey = '5db821c4-36d5-475b-9a4e-f48ab21df7b0';
+
+var breeds = 'https://api.thecatapi.com/v1/breeds?limit=4';
