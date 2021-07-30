@@ -7,10 +7,10 @@ Color kLightBrown = Color(0xff75645a);
 Color kBaige = Color(0xffdbc9b5);
 Color kDarkBaige = Color(0xff8c7b73);
 
-TextStyle kMainText = GoogleFonts.raleway(
+TextStyle kSeccondText = GoogleFonts.raleway(
     textStyle: TextStyle(color: Colors.black87, fontSize: 18));
 
-TextStyle kSeccondText = GoogleFonts.roboto(
+TextStyle kMainText = GoogleFonts.roboto(
     textStyle: TextStyle(color: Colors.black87, fontSize: 18));
 
 Widget? prevPage;

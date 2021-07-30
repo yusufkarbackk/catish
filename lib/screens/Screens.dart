@@ -18,3 +18,4 @@ part 'Wrapper.dart';
 part 'SignUpScreen.dart';
 part 'HomeScreen.dart';
 part 'detail_screen.dart';
+part 'CheckoutScreen.dart';
