@@ -21,7 +21,8 @@ class FavouritesWidget extends StatelessWidget {
                         sex: e.sex,
                         id: e.id,
                         age: e.age,
-                        desc: e.desc);
+                        desc: e.desc,
+                        weight: e.weight);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -14,3 +14,4 @@ part 'AuthTextField.dart';
 part 'FavouritesWidget.dart';
 part 'HomeScreenHeader.dart';
 part 'SearchBarWidget.dart';
+part 'CatDetailWidget.dart';

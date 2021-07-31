@@ -8,6 +8,7 @@ class Cat {
   late final String id;
   late final int age;
   late final String desc;
+  late final String weight;
 
   Cat(
       {required this.image,
@@ -16,7 +17,8 @@ class Cat {
       required this.sex,
       required this.id,
       required this.age,
-      required this.desc});
+      required this.desc,
+      required this.weight});
 
   factory Cat.fromJson(Map<String, dynamic> json) {
     var random = Random();
@@ -41,7 +43,7 @@ class Cat {
         id: json['id'],
         age: random.nextInt(46) + 3,
         race: json['name'],
-        desc: json['description']
-        );
+        desc: json['description'],
+        weight: json['weight']['metric']);
   }
 }
