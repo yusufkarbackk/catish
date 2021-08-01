@@ -5,12 +5,15 @@ class Transaction {
   late final String name;
   late final String catName;
   late final String email;
-  late final String price;
+  late final int price;
+  late final String image;
 
   Transaction(
       {required this.id,
       required this.name,
       required this.catName,
       required this.email,
-      required this.price});
+      required this.price,
+      required this.image
+      });
 }

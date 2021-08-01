@@ -63,8 +63,34 @@ class _DetailScreenState extends State<DetailScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text(
+                      'Price: ' +
+                          NumberFormat.currency(
+                                  locale: 'id_IDR',
+                                  decimalDigits: 0,
+                                  symbol: 'Rp')
+                              .format(widget.cat.price),
+                      style: kMainText.copyWith(color: Colors.green),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          Transaction transaction = Transaction(
+                              id: widget.cat.id,
+                              name: user.catishUser.name,
+                              catName: widget.cat.race,
+                              email: user.catishUser.email,
+                              price: widget.cat.price,
+                              image: widget.cat.image);
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Checkoutscreen(transaction)));
+                        },
                         style: ElevatedButton.styleFrom(
                             fixedSize: Size(double.infinity, 44),
                             primary: kLightBrown),
@@ -74,7 +100,10 @@ class _DetailScreenState extends State<DetailScreen> {
                             style: kMainText.copyWith(
                                 fontSize: 18, color: Colors.white),
                           ),
-                        ))
+                        )),
+                    SizedBox(
+                      height: 22,
+                    ),
                   ],
                 ),
               ),
