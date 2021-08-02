@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:catish/shared/Constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 part 'AuthTextField.dart';
@@ -15,3 +16,6 @@ part 'FavouritesWidget.dart';
 part 'HomeScreenHeader.dart';
 part 'SearchBarWidget.dart';
 part 'CatDetailWidget.dart';
+part 'OrderInfoWidget.dart';
+part 'PickupLocationWidget.dart';
+part 'OrderNameWidget.dart';

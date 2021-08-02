@@ -1,3 +1,4 @@
+import 'package:catish/providers/CatProvider.dart';
 import 'package:catish/providers/user_provider.dart';
 import 'package:catish/services/Services.dart';
 import 'package:flutter/material.dart';

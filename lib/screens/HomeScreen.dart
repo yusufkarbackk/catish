@@ -25,6 +25,32 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 50,
             ),
+            Container(
+                width: double.infinity,
+                height: 180,
+                child: FutureBuilder(
+                    future: CatProvider.getCatBreeds(),
+                    builder: (context, snapshots) {
+                      if (snapshots.hasData) {
+                        List<Cat> data = snapshots.data! as List<Cat>;
+
+                        return ListView.builder(
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  width: 60,
+                                  height: 60,
+                                  child: Center(
+                                    child: Text(data[index].race),
+                                  ));
+                            });
+                      } else {
+                        return SpinKitFadingCircle(
+                          size: 50,
+                          color: kBaige,
+                        );
+                      }
+                    })),
             Text(
               "Favourites",
               style: kSeccondText.copyWith(fontSize: 22),
