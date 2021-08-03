@@ -77,13 +77,14 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     ElevatedButton(
                         onPressed: () async {
-                          Transaction transaction = Transaction(
+                          CatishTransaction transaction = CatishTransaction(
                               id: widget.cat.id,
                               name: user.catishUser.name,
                               catName: widget.cat.race,
                               email: user.catishUser.email,
                               price: widget.cat.price,
-                              image: widget.cat.image);
+                              image: widget.cat.image,
+                              time: DateTime.now().millisecondsSinceEpoch);
 
                           Navigator.push(
                               context,

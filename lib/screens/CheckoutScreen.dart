@@ -1,7 +1,7 @@
 part of 'Screens.dart';
 
 class Checkoutscreen extends StatefulWidget {
-  final Transaction transactions;
+  final CatishTransaction transactions;
 
   Checkoutscreen(this.transactions);
 

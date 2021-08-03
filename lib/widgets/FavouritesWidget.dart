@@ -31,8 +31,7 @@ class FavouritesWidget extends StatelessWidget {
                   child: Container(
                     height: 150,
                     child: Card(
-                        color: kBaige,
-                        elevation: 3,
+                        elevation: 5,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
                         child: Row(

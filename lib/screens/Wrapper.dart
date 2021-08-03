@@ -11,16 +11,10 @@ class Wrapper extends StatelessWidget {
       prevPage = SplashScreen();
     } else {
       if (!(prevPage is HomeScreen)) {
-        prevPage = HomeScreen(
-          user: catishUser,
-        );
+        prevPage = HomeScreen();
       }
     }
 
-    return catishUser == null
-        ? SplashScreen()
-        : HomeScreen(
-            user: catishUser,
-          );
+    return catishUser == null ? SplashScreen() : CurrentScreen();
   }
 }

@@ -19,3 +19,4 @@ part 'CatDetailWidget.dart';
 part 'OrderInfoWidget.dart';
 part 'PickupLocationWidget.dart';
 part 'OrderNameWidget.dart';
+part 'CategoriesWidget.dart';

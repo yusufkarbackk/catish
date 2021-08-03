@@ -20,3 +20,5 @@ part 'SignUpScreen.dart';
 part 'HomeScreen.dart';
 part 'detail_screen.dart';
 part 'CheckoutScreen.dart';
+part 'CurrentScreen.dart';
+part 'OrderScreen.dart';

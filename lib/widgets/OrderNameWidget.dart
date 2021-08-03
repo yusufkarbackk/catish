@@ -1,7 +1,7 @@
 part of 'Widgets.dart';
 
 class OrderNameWidget extends StatelessWidget {
-  final Transaction transaction;
+  final CatishTransaction transaction;
 
   OrderNameWidget(this.transaction);
   @override
